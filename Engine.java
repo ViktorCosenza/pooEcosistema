@@ -14,7 +14,7 @@ import java.awt.event.*;
 public class Engine implements ActionListener {
     
     private final int  SPEED_REFERENCE = 1000; /* 1000 */
-    private static int speed   = 20;
+    private static int speed   = 100;
     private Timer      timer   = new Timer(SPEED_REFERENCE/speed,this);
     private int        time    = 0;
 

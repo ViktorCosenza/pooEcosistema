@@ -11,8 +11,6 @@ import java.awt.*;
 public class Dummy extends Entity {
     /** The icon of this entity. */
     private final ImageIcon image = new ImageIcon("unknown.gif"); 
-    /** The position of this entity. */
-    protected Pasture pasture;
     /** The number of ticks this entity should get before moving. */
     protected int moveDelay;
 
@@ -22,7 +20,7 @@ public class Dummy extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Dummy(Pasture pasture) {
-        this.pasture = pasture;
+    	super(pasture);
         moveDelay = 10;
     }
 
@@ -33,7 +31,7 @@ public class Dummy extends Entity {
      * @param position the position of this entity.
      */
     public Dummy(Pasture pasture, boolean alive) {
-        this.pasture   = pasture;
+        super(pasture);
         this.alive     = alive;
         moveDelay      = 10;
     }
@@ -53,7 +51,7 @@ public class Dummy extends Entity {
             
             if(neighbour != null) 
                 pasture.moveEntity(this, neighbour);
-
+            
             moveDelay = 10;
         }
     }
@@ -84,5 +82,29 @@ public class Dummy extends Entity {
 
         return it.next();
     }
-
+    
+    public Point findClosestFriendly() {
+    	ArrayList<Entity> l = new ArrayList();
+    	Point closest = new Point();
+    	Point location = pasture.getPosition(this);
+    	int distance;
+    	//Percorre as entidades e adiciona todas do mesmo tipo na lista
+    	for(Entity e : pasture.getEntities()) {
+    		if(e instanceof Dummy)
+    			l.add(e);
+    	}
+    	//Percorre as entidades amigaveis para achar a mais perto
+    	
+    	if(l != null)
+    		closest = pasture.getPosition(l.get(0));
+    	for(Entity e : l) {
+    		distance = ((int)location.getX() - (int)pasture.getPosition(e).getX()) + ((int)location.getY() - (int)pasture.getPosition(e).getY());
+    	}
+    	return closest;
+    }
+    
+    public int calculateDistance(Point p) {
+    	
+    	return 1;
+    }
 }

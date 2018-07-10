@@ -10,14 +10,14 @@ import java.awt.Point;
  */
 public class Pasture {
 
-    private int         width = 20;
-    private int         height = 20;
+    private int         width = 15;
+    private int         height = 15;
 
     private int         dummys = 0;
     private int         wolves;
-    private int         sheep;
-    private int         plants = 1;
-    private int         fences;
+    private int         sheep = 10;
+    private int         plants = 45;
+    private int         fences = 5;
 
     private Set<Entity> world = 
         new HashSet<Entity>();
@@ -61,6 +61,11 @@ public class Pasture {
         for (int i = 0; i < plants; i++) {
         	Entity plant = new Plant(this);
         	addEntity(plant, getFreePosition(plant));
+        }
+        
+        for (int i = 0; i < sheep; i++) {
+        	Entity sheep = new Sheep(this);
+        	addEntity(sheep, getFreePosition(sheep));
         }
 
         gui.update();
@@ -188,12 +193,36 @@ public class Pasture {
             return new ArrayList<Entity>(l);
         }
     }
+    
+    public Collection<Entity> getNeighbours(Entity entity){
+    	Set<Entity> neighbours = new HashSet<Entity>();
+        Point p;
+        Collection<Entity> entities;
+        
+        if(entity == null)
+        	return null;
+        int entityX = (int)getEntityPosition(entity).getX();
+        int entityY = (int)getEntityPosition(entity).getY();
+
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+            	p = new Point(entityX + x,
+            				  entityY + y);
+            	entities = getEntitiesAt(p); 
+            	if(entities != null)
+            		neighbours.addAll(entities);
+            }
+        }
+        return new ArrayList<Entity>(neighbours);
+    }
 
 
     public Collection<Point> getFreeNeighbours(Entity entity) {
         Set<Point> free = new HashSet<Point>();
         Point p;
-
+        if(entity == null)
+        	return null;
+        
         int entityX = (int)getEntityPosition(entity).getX();
         int entityY = (int)getEntityPosition(entity).getY();
 
@@ -218,6 +247,8 @@ public class Pasture {
     }
 
     public Point getEntityPosition(Entity entity) {
+    	if(entity == null)
+    		return null;
         return point.get(entity);
     }
 

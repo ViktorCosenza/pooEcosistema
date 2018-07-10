@@ -18,7 +18,7 @@ public class Fence extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Fence(Pasture pasture) {
-        this.pasture = pasture;
+        super(pasture);
     }
 
     /**

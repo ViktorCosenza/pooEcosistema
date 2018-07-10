@@ -8,8 +8,6 @@ import javax.swing.ImageIcon;
 public class Plant extends Entity {
 	/** The icon of this entity. */
     private final ImageIcon image = new ImageIcon("plant.gif"); 
-    /** The position of this entity. */
-    protected Pasture pasture;
     /** The number of ticks this entity should get before reproducing. */
     protected int reproduceDelay;
     
@@ -23,14 +21,14 @@ public class Plant extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Plant(Pasture pasture) {
-        this.pasture = pasture;
-        reproduceDelay = 10 + ThreadLocalRandom.current().nextInt(0, 6);
-        delayCount = 15;
-        life = 20 + ThreadLocalRandom.current().nextInt(0, 10);
+    	super(pasture);
+        reproduceDelay = 100 + ThreadLocalRandom.current().nextInt(0, 100);
+        delayCount = 200;
+        life = 300 + ThreadLocalRandom.current().nextInt(0, 200);
     }
     
     public Plant(Pasture pasture, int delay) {
-        this.pasture = pasture;
+        super(pasture);
         reproduceDelay = delay;
         delayCount = delay;
         life = 25;

@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
-import java.util.*;
 
 /**
  * This is the superclass of all entities in the pasture simulation
@@ -9,8 +7,11 @@ import java.util.*;
  */
 public abstract class Entity {
 	boolean alive;
-	
-    public Entity() {
+    /** The position of this entity. */
+    protected Pasture pasture;
+    
+    public Entity(Pasture pasture) {
+    	this.pasture = pasture;
     	this.alive = true;
     }
 	
@@ -27,5 +28,6 @@ public abstract class Entity {
     public boolean isAlive() {
     	return this.alive;
     }
-
+    
+    public void kill() { alive = false; }
 }
