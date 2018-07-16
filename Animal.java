@@ -1,6 +1,7 @@
 import java.awt.Point;
 import java.util.Collection;
 import java.util.Iterator;
+import javax.swing.ImageIcon;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
@@ -17,8 +18,8 @@ public abstract class Animal extends Entity {
 	
 	protected int currentReproduceDelay;
 	
-	public Animal(Pasture pasture) {
-		super(pasture);
+	public Animal(Pasture pasture, ImageIcon image) {
+		super(pasture, image);
 		this.hungerDelay = 300 + ThreadLocalRandom.current().nextInt(100);
 		this.moveDelay = 50 + ThreadLocalRandom.current().nextInt(50);
 		this.reproduceDelay = 300 + ThreadLocalRandom.current().nextInt(200);
@@ -29,13 +30,16 @@ public abstract class Animal extends Entity {
 	
 	public abstract void reproduce();
 	
+	@Override
 	public void tick() {
-		if(alive) {
-			currentMoveDelay--;
-			currentReproduceDelay--;
-			currentHungerDelay--;
-		}
+		super.tick();
+		if(!alive)
+			return;
+		currentMoveDelay--;
+		currentReproduceDelay--;
+		currentHungerDelay--;
 		
+		//Move entidade
 		if(currentMoveDelay == 0) {
 			Point neighbour = 
 					(Point)getRandomMember
@@ -46,15 +50,19 @@ public abstract class Animal extends Entity {
 	            currentMoveDelay = moveDelay;
 		}
 		
-		if(currentReproduceDelay == 0) {
+		//Reproduz se está fertil e não está com fome
+		if(currentReproduceDelay == 0 && currentHungerDelay > 50) {
 			reproduce();
 		}
 		
-		if(currentHungerDelay <= 20)
+		//Procura comida nos arredores
+		if(currentHungerDelay <= 100)
 			eat();
-		if(currentHungerDelay < -10) {
+		
+		//Se fome < 0 ,animal morre de fome;
+		if(currentHungerDelay < 0) {
 			System.out.println("An animal died from starvation");
-			pasture.removeEntity(this);
+			alive = false;
 		}
 	}
 	

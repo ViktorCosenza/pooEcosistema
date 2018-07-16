@@ -10,14 +10,14 @@ import java.awt.Point;
  */
 public class Pasture {
 
-    private int         width = 15;
-    private int         height = 15;
+    private int         width = 50;
+    private int         height = 50;
 
     private int         dummys = 0;
     private int         wolves;
     private int         sheep = 10;
-    private int         plants = 45;
-    private int         fences = 5;
+    private int         plants = 64;
+    private int         fences = 0;
 
     private Set<Entity> world = 
         new HashSet<Entity>();

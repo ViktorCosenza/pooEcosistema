@@ -9,8 +9,6 @@ import java.awt.*;
 
 
 public class Dummy extends Entity {
-    /** The icon of this entity. */
-    private final ImageIcon image = new ImageIcon("unknown.gif"); 
     /** The number of ticks this entity should get before moving. */
     protected int moveDelay;
 
@@ -20,7 +18,7 @@ public class Dummy extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Dummy(Pasture pasture) {
-    	super(pasture);
+    	super(pasture, new ImageIcon("unknown.gif"));
         moveDelay = 10;
     }
 
@@ -31,7 +29,7 @@ public class Dummy extends Entity {
      * @param position the position of this entity.
      */
     public Dummy(Pasture pasture, boolean alive) {
-        super(pasture);
+        super(pasture, new ImageIcon("unknown.gif"));
         this.alive     = alive;
         moveDelay      = 10;
     }
@@ -55,13 +53,6 @@ public class Dummy extends Entity {
             moveDelay = 10;
         }
     }
-    
-    /** 
-     * Returns the icon of this entity, to be displayed by the pasture
-     * gui. 
-     * @see PastureGUI
-     */
-    public ImageIcon getImage() { return image; }
 
     /**
      * Tests if this entity can be on the same position in the pasture

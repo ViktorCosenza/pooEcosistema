@@ -2,12 +2,9 @@ import java.awt.Point;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Collection;
 import java.util.Iterator;
-
 import javax.swing.ImageIcon;
 
 public class Plant extends Entity {
-	/** The icon of this entity. */
-    private final ImageIcon image = new ImageIcon("plant.gif"); 
     /** The number of ticks this entity should get before reproducing. */
     protected int reproduceDelay;
     
@@ -21,14 +18,14 @@ public class Plant extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Plant(Pasture pasture) {
-    	super(pasture);
+    	super(pasture, new ImageIcon("plant.gif"));
         reproduceDelay = 100 + ThreadLocalRandom.current().nextInt(0, 100);
         delayCount = 200;
         life = 300 + ThreadLocalRandom.current().nextInt(0, 200);
     }
     
     public Plant(Pasture pasture, int delay) {
-        super(pasture);
+    	super(pasture, new ImageIcon("plant.gif"));
         reproduceDelay = delay;
         delayCount = delay;
         life = 25;
@@ -38,12 +35,12 @@ public class Plant extends Entity {
      * Performs the relevant actions of this entity, depending on what
      * kind of entity it is.
      */
+    
+    @Override
     public void tick() {
-        if(!alive) {
-        	pasture.removeEntity(this);
-        	return;
-        }
-        
+    	super.tick();
+    	if(!alive)
+    		return;
         delayCount--;
         life--;
         
@@ -52,22 +49,23 @@ public class Plant extends Entity {
         }
         
         if(delayCount <= 0) {
-            Point neighbour = 
+        	reproduce();
+        }
+    }
+    
+    public void reproduce() {
+    	Point neighbour = 
                 (Point)getRandomMember
                 (pasture.getFreeNeighbours(this));
             if(neighbour != null) { 
                 pasture.addEntity(new Plant(pasture), neighbour);
             	delayCount = reproduceDelay;
             }
-        }
+            else {
+            	pasture.removeEntity(this);
+            	System.out.println("A plant died from lack of space");
+            }
     }
-    
-    /** 
-     * Returns the icon of this entity, to be displayed by the pasture
-     * gui. 
-     * @see PastureGUI
-     */
-    public ImageIcon getImage() { return image; }
 
     /**
      * Tests if this entity can be on the same position in the pasture

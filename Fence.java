@@ -7,8 +7,6 @@ import javax.swing.*;
 
 
 public class Fence extends Entity {
-    /** The icon of this entity. */
-    private final ImageIcon image = new ImageIcon("fence.gif"); 
     /** The position of this entity. */
     protected Pasture pasture;
 
@@ -18,21 +16,14 @@ public class Fence extends Entity {
      * @param pasture the pasture this entity should belong to.
      */
     public Fence(Pasture pasture) {
-        super(pasture);
+        super(pasture, new ImageIcon("fence.gif"));
     }
 
     /**
      * Performs the relevant actions of this entity, depending on what
      * kind of entity it is.
      */
-    public void tick() {}
-    
-    /** 
-     * Returns the icon of this entity, to be displayed by the pasture
-     * gui. 
-     * @see PastureGUI
-     */
-    public ImageIcon getImage() { return image; }
+    public void tick() { return; };
 
     /**
      * Tests if this entity can be on the same position in the pasture

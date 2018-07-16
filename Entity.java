@@ -6,27 +6,37 @@ import javax.swing.*;
  * that exist in the simulation of the pasture.
  */
 public abstract class Entity {
+	
+	private final ImageIcon image;
+	
 	boolean alive;
     /** The position of this entity. */
     protected Pasture pasture;
     
-    public Entity(Pasture pasture) {
+    public Entity(Pasture pasture, ImageIcon image) {
     	this.pasture = pasture;
     	this.alive = true;
+    	this.image = image;
     }
 	
-	public abstract void tick();
+	public void tick() { 
+		if(!alive) { 
+			pasture.removeEntity(this); 
+			return;
+		}
+	};
 
-    /** 
-     * ImageIcon returns the icon of this entity, to be displayed by
-     * the pasture gui.
+	/** 
+     * Returns the icon of this entity, to be displayed by the pasture
+     * gui. 
+     * @see PastureGUI
      */
-    public abstract ImageIcon getImage();
+    public ImageIcon getImage(){ return image; };
     
     public abstract boolean isCompatible(Entity otherEntity);
     
     public boolean isAlive() {
-    	return this.alive;
+    	return alive;
     }
     
     public void kill() { alive = false; }
