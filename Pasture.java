@@ -17,7 +17,7 @@ public class Pasture {
     private int         wolves;
     private int         sheep = 10;
     private int         plants = 64;
-    private int         fences = 0;
+    private int         fences = 10;
 
     private Set<Entity> world = 
         new HashSet<Entity>();
@@ -33,12 +33,30 @@ public class Pasture {
      * it on random positions.
      */
     public Pasture() {
-
         Engine engine = new Engine(this);
         gui = new PastureGUI(width, height, engine);
-
-        /* The pasture is surrounded by a fence. Replace Dummy for
-         * Fence when you have created that class */
+        drawFence();
+    	spawnEntities();
+        refresh();
+    }
+    
+    public Pasture(int height, int width, int plants, int sheeps, int wolves, int fences) {
+    	Engine engine = new Engine(this);
+    	this.height = height;
+    	this.width = width;
+    	this.plants = plants;
+    	this.sheep = sheeps;
+    	this.wolves = wolves;
+    	this.fences = fences;
+    	gui = new PastureGUI(width, height, engine);
+    	drawFence();
+    	spawnEntities();
+    	refresh();
+    }
+    
+    /* The pasture is surrounded by a fence. Replace Dummy for
+     * Fence when you have created that class */
+    public void drawFence() {
         for (int i = 0; i < width; i++) {
             addEntity(new Fence(this), new Point(i,0));
             addEntity(new Fence(this), new Point(i, height - 1));
@@ -47,7 +65,9 @@ public class Pasture {
             addEntity(new Fence(this), new Point(0,i));
             addEntity(new Fence(this), new Point(width - 1,i));
         }
-
+    }
+    
+    public void spawnEntities() {
         /* 
          * Now insert the right number of different entities in the
          * pasture.
@@ -67,8 +87,11 @@ public class Pasture {
         	Entity sheep = new Sheep(this);
         	addEntity(sheep, getFreePosition(sheep));
         }
-
-        gui.update();
+        
+        for (int i = 0; i < fences; i++) {
+        	Entity fence = new Fence(this);
+        	addEntity(fence, getFreePosition(fence));
+        }
     }
 
     public void refresh() {

@@ -36,20 +36,27 @@ public class Param extends JPanel implements ActionListener{
 	    System.out.print(entry.getValue().getText());
 	    System.out.println();
 	}
+	int width = Integer.parseInt(m.get("Largura").getText());
+	int height = Integer.parseInt(m.get("Altura").getText());
+    int plants = Integer.parseInt(m.get("Plantas").getText());
+    int sheeps = Integer.parseInt(m.get("Ovelhas").getText());
+    int wolves = Integer.parseInt(m.get("Lobos").getText()); 
+    int fences = Integer.parseInt(m.get("Cercas").getText());
+	new Pasture(width, height, plants, sheeps, wolves, fences);
     }
     
 
     public static void main (String [] arg) {
 	JFrame f = new JFrame();
 	Param p = new Param();
-	p.add("name", "Vad heter du", "Kalle");
-	p.add("age", "Hur gammal är du", "123");
-	p.add("color", "Vad är din favoritfärg", "blå");
-	p.add("finger", "Hur många fingrar håller jag upp", "3");
-	p.add("friday", "När är det fredag?", "idag");
-	p.add("rain", "Regnar det?", "ja");
+	p.add("Largura", "Largura do pasto", "15");
+	p.add("Altura", "Altura do pasto", "15");
+	p.add("Ovelhas", "Quantidade de ovelhas", "10");
+	p.add("Lobos", "Quantidade de lobos", "10");
+	p.add("Plantas", "Quantidade de plantas", "10");
+	p.add("Cercas", "Quantidade de cercas", "10");
 
-	JButton klar = new JButton("Klar!");
+	JButton klar = new JButton("Come�ar!");
 
 	p.add(klar);
 	klar.addActionListener(p);

@@ -35,6 +35,7 @@ public abstract class Animal extends Entity {
 		super.tick();
 		if(!alive)
 			return;
+		
 		currentMoveDelay--;
 		currentReproduceDelay--;
 		currentHungerDelay--;
