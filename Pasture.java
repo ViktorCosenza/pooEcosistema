@@ -14,7 +14,7 @@ public class Pasture {
     private int         height = 50;
 
     private int         dummys = 0;
-    private int         wolves;
+    private int         wolves = 10;
     private int         sheep = 10;
     private int         plants = 64;
     private int         fences = 10;
@@ -92,6 +92,13 @@ public class Pasture {
         	Entity fence = new Fence(this);
         	addEntity(fence, getFreePosition(fence));
         }
+        
+       
+        for (int i = 0; i < wolves; i++) {
+        	Entity wolve = new Wolf(this);
+        	addEntity(wolve, getFreePosition(wolve));
+        }
+       
     }
 
     public void refresh() {

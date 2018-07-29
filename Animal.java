@@ -6,11 +6,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Entity {
 	
-	protected final int hungerDelay;
+	protected int hungerDelay;
 	
-	protected final int moveDelay;
+	protected int moveDelay;
 	
-	protected final int reproduceDelay;
+	protected int reproduceDelay;
 	
 	protected int currentHungerDelay;
 	
@@ -20,12 +20,9 @@ public abstract class Animal extends Entity {
 	
 	public Animal(Pasture pasture, ImageIcon image) {
 		super(pasture, image);
-		this.hungerDelay = 300 + ThreadLocalRandom.current().nextInt(100);
-		this.moveDelay = 50 + ThreadLocalRandom.current().nextInt(50);
-		this.reproduceDelay = 300 + ThreadLocalRandom.current().nextInt(200);
-		this.currentMoveDelay = 1;
-		this.currentReproduceDelay = reproduceDelay;	
-		this.currentHungerDelay = hungerDelay;
+		this.currentMoveDelay = 5 + ThreadLocalRandom.current().nextInt(15);
+		this.currentReproduceDelay = 15 + ThreadLocalRandom.current().nextInt(150);	
+		this.currentHungerDelay = 10 + ThreadLocalRandom.current().nextInt(200);
 	}
 	
 	public abstract void reproduce();

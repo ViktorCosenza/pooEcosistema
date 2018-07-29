@@ -2,11 +2,15 @@ import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.Collection;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Sheep extends Animal {
 	
 	public Sheep(Pasture pasture){
 		super(pasture, new ImageIcon("sheep.gif"));
+		this.hungerDelay = 300 + ThreadLocalRandom.current().nextInt(100);
+		this.moveDelay = 50 + ThreadLocalRandom.current().nextInt(50);
+		this.reproduceDelay = 300 + ThreadLocalRandom.current().nextInt(200);
 	}
 	
 	public void resetReproduceDelay() { this.currentReproduceDelay = this.reproduceDelay; }
@@ -16,9 +20,6 @@ public class Sheep extends Animal {
 		super.tick();
 		if(!alive)
 			return;
-		if(currentReproduceDelay == 0) {
-			reproduce();
-		}
 	}
 	
 	public boolean isCompatible(Entity otherEntity) { 
